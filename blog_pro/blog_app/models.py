@@ -21,7 +21,7 @@ class Post(models.Model):
     publicar = models.DateTimeField(default=timezone.now) # DateTimeField INDICA QUANDO FOI O POST
     criado = models.DateTimeField(auto_now_add=True) # INDICA QUANDO O POST FOI CRIADO
     atualizado = models.DateTimeField(auto_now=True) # INDICA A ULTIMA VEZ QUE O POST FOI ATUALIZADO
-    satatus = models.CharField(max_length=10, # MOSTRA O STATUS DO POST
+    status = models.CharField(max_length=10, # MOSTRA O STATUS DO POST
                                 choices=ESCOLHA_STATUS,
                                 default='rascunho')
     class Meta: # ESSA CLASSE CONTÉM METADATA. DJANGO ORDENA OS RESULTADOS
