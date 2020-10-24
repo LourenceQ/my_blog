@@ -3,6 +3,11 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 # Create your models here.
+class AdminPub(models.Manager):
+    def get_queryset(self): # ESSE MÉTODO DE UM MANAGER RETORNA A QuerySet QUE VAI SER EXECUTADA
+        return super(AdminPub,
+                     self).get_queryset()\
+                          .filter(status='publicado') # SOBREESCREVE O MÉTODO ACIMA PARA INCLUIR O MANAGER COSTOMIZADO
 
 class Post(models.Model):
 
@@ -24,6 +29,9 @@ class Post(models.Model):
     status = models.CharField(max_length=10, # MOSTRA O STATUS DO POST
                                 choices=ESCOLHA_STATUS,
                                 default='rascunho')
+    objetos = models.Manager() # MANAGER PADRÃO
+    publicado = AdminPub() # MANAGER PERSONALIZADO
+
     class Meta: # ESSA CLASSE CONTÉM METADATA. DJANGO ORDENA OS RESULTADOS
         ordering = ('-publicar',) # PELO CAMPO DE PUBLICAÇÃO EM ORDEM DECRESCENTE
                                       # QUANDO CONSULTA A BASE DE DADOS
