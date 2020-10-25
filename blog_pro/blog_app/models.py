@@ -35,6 +35,11 @@ class Post(models.Model):
     class Meta: # ESSA CLASSE CONTÉM METADATA. DJANGO ORDENA OS RESULTADOS
         ordering = ('-publicar',) # PELO CAMPO DE PUBLICAÇÃO EM ORDEM DECRESCENTE
                                       # QUANDO CONSULTA A BASE DE DADOS
+    def get_absolute_url(self):
+        return reverse('blog:detalhe_post',
+                        args=[self.publicar.ano,
+                              self.publicar.mes,
+                              self.publicar.dia, self.slug])
 
     def __str__(self): # METODO PADRÃO PARA LEITURA DO OBJETO
         return self.titulo
