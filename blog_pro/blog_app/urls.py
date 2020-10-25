@@ -7,7 +7,7 @@ app_name = 'blog_app' # DEFINE UMA APLICAÇÃO COM O NOME DA VARIAVEL blog_app
 urlpatterns = [       # DEFINIDO DOIS PADRÕES DIFERENTES USANDO A FUNÇÃO path()
     #POST VIEWS
     path('',views.lista_post, name='lista_post'), # O PRIMEIRO PADRÃO Ñ ECEBE NENHUM ARGUMETNO E MAPEADA PARA A VIEW lista_post
-    path('<int:ano>/<int:mes>/<int:dia>/<slug:post>/',views.detalhe_post,name='detalhe_post'),
+    path('<int:year>/<int:month>/<int:day>/<slug:post>/',views.detalhe_post,name='detalhe_post'),
 ]
 
 #  O SEGUNDO PADRÃO RECEBE 4 ARGUMENTOS E É MAPEADA PARA A VIEW detalhe_post

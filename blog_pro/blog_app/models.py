@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 # Create your models here.
 class AdminPub(models.Manager):
@@ -36,10 +37,10 @@ class Post(models.Model):
         ordering = ('-publicar',) # PELO CAMPO DE PUBLICAÇÃO EM ORDEM DECRESCENTE
                                       # QUANDO CONSULTA A BASE DE DADOS
     def get_absolute_url(self):
-        return reverse('blog:detalhe_post',
-                        args=[self.publicar.ano,
-                              self.publicar.mes,
-                              self.publicar.dia, self.slug])
+        return reverse('blog_app:detalhe_post',
+                        args=[self.publicar.year,
+                              self.publicar.month,
+                              self.publicar.day, self.slug])
 
     def __str__(self): # METODO PADRÃO PARA LEITURA DO OBJETO
         return self.titulo
