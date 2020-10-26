@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Post
 from django.views.generic import ListView
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
-
+from .forms import EmailFormulario
 # Create your views here.
 
 def lista_post(request): # ESSA VIEW PEGA A REQUEST COMO ÚNICO PARÂMETRO. PARÂMETRO REQUERIDO POR TODAS AS VIEWS
@@ -40,3 +40,16 @@ class PostListView(ListView):
     context_object_name = 'posts'
     paginate_by = 3
     template_name = 'blog_app/post/lista.html'
+
+def post_compartilhar(request, post_id): # DEFINE A VIEW QUE PEGA AS VARIAVEIS OBJETO DE request E post_id COMO PARÂMETROS.
+    # RETIRA POSTS POR ID
+    post = get_object_or_404(Post, id=post_id, status='publicado') # USA get_object_or_404 PARA RETIRAR O POST POR ID E CERTIFICA QUE O POST TEM STATUS DE PUBLICADO.
+    if request.method =='POST':
+        # FORMULÁRIO SUBMETIDO
+        form = EmailFormulario(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            # SEND EMAIL
+        else:
+            form = EmailFormulario()
+        return render(request,'blog_app/post/compartilhar.html',{'post':post,'form':form})
