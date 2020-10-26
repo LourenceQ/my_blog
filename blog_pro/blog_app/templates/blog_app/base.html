@@ -2,12 +2,11 @@
 {% load static %}
 <html lang="pt" dir="ltr">
   <head>
+    <link href="{% static 'blog_app/css/blog.css' %}" rel="stylesheet" >
     <meta charset="utf-8">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{% static "css/blog.css" %}">
   </head>
-  <body>
-    <h1>Oi</h1>
+  <body>    
     <div id="content">
       {% block content %}
       {% endblock %}

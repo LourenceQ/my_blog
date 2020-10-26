@@ -1,75 +1,92 @@
-h1{
-  font-color: red;
+body {
+    margin:0;
+    padding:0;
+    font-family:helvetica, sans-serif;
 }
 
-.techfont{
-  font-family: 'Ruso One',sans-serif;
-  font-size: : 1.5em;
-  margin-bottom: 10px;
-}
-.bigbrand{
-  font-size: 1.5em;
+a {
+    color:#00abff;
+    text-decoration:none;
 }
 
-.centerstage{
-  margin-left: :auto;
-  margin-right:auto;
+h1 {
+    font-weight:normal;
+    border-bottom:1px solid #bbb;
+    padding:0 0 10px 0;
 }
 
-.postdate{
-  text-align: center;
+h2 {
+    font-weight:normal;
+    margin:30px 0 0;
 }
 
-.posttitle{
-  font-family: 'Ruso One',sans-serif;
-  font-size: 3em;
-  text-align: center;
+#content {
+    float:left;
+    width:60%;
+    padding:0 0 0 30px;
 }
 
-.postcontent{
-  font-family: 'Montserrat';
-  font-size: 1.5em;
+#sidebar {
+    float:right;
+    width:30%;
+    padding:10px;
+    background:#efefef;
+    height:100%;
 }
 
-.btn-comment{
-  position: absolute;
-  right: 0px;
+p.date {
+    color:#ccc;
+    font-family: georgia, serif;
+    font-size: 12px;
+    font-style: italic;
 }
 
-/* COLOR CHANGER BELOW */
-.loader {
-  filter:hue-rotate(0deg);
-  color:linear-gradient(45deg,#0f8,#08f);
-  animation:hue 10000ms infinite linear;
-
+/* pagination */
+.pagination {
+    margin:40px 0;
+    font-weight:bold;
 }
 
-@keyframes spinify {
-  0% {
-    transform: translate(0px,0px);
-
-  }
-  33% {
-    transform: translate(0px,24px);
-    border-radius:100%;
-    width:10px;
-    height:10px;
-
-  }
-   66% {
-    transform:translate(0px,-16px);
-  }
-
-   88% {
-    transform:translate(0px,4px);
-
-  }
-  100% {
-    transform:translate(0px,0px);
-  }
+/* forms */
+label {
+    float:left;
+    clear:both;
+    color:#333;
+    margin-bottom:4px;
 }
-@keyframes hue{
-  0%{filter: hue-rotate(0deg);}
-  100%{filter:hue-rotate(360deg);}
+input, textarea {
+    clear:both;
+    float:left;
+    margin:0 0 10px;
+    background:#ededed;
+    border:0;
+    padding:6px 10px;
+    font-size:12px;
+}
+input[type=submit] {
+    font-weight:bold;
+    background:#00abff;
+    color:#fff;
+    padding:10px 20px;
+    font-size:14px;
+    text-transform:uppercase;
+}
+.errorlist {
+    color:#cc0033;
+    float:left;
+    clear:both;
+    padding-left:10px;
+}
 
+/* comments */
+.comment {
+    padding:10px;
+}
+.comment:nth-child(even) {
+    background:#efefef;
+}
+.comment .info {
+    font-weight:bold;
+    font-size:12px;
+    color:#666;
 }
