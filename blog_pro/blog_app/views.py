@@ -4,6 +4,7 @@ from django.views.generic import ListView
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 
 # Create your views here.
+
 def lista_post(request): # ESSA VIEW PEGA A REQUEST COMO ÚNICO PARÂMETRO. PARÂMETRO REQUERIDO POR TODAS AS VIEWS
     object_list = Post.publicado.all()
     paginator = Paginator(object_list, 3) # 3 POST EM CADA PÁGINA
@@ -35,7 +36,7 @@ def detalhe_post(request, year, month, day, post):
     return render(request,'blog_app/post/detalhe.html',{'post': post})
 
 class PostListView(ListView):
-    queryset = Post.publicado.all()
+    queryset = Post.publicado.all() #
     context_object_name = 'posts'
     paginate_by = 3
     template_name = 'blog_app/post/lista.html'
