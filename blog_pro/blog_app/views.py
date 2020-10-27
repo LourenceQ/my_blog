@@ -3,6 +3,7 @@ from .models import Post
 from django.views.generic import ListView
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from .forms import EmailFormulario
+from django.core.mail import send_mail
 # Create your views here.
 
 def lista_post(request): # ESSA VIEW PEGA A REQUEST COMO ÚNICO PARÂMETRO. PARÂMETRO REQUERIDO POR TODAS AS VIEWS
@@ -44,12 +45,23 @@ class PostListView(ListView):
 def post_compartilhar(request, post_id): # DEFINE A VIEW QUE PEGA AS VARIAVEIS OBJETO DE request E post_id COMO PARÂMETROS.
     # RETIRA POSTS POR ID
     post = get_object_or_404(Post, id=post_id, status='publicado') # USA get_object_or_404 PARA RETIRAR O POST POR ID E CERTIFICA QUE O POST TEM STATUS DE PUBLICADO.
+    sent = False
+
     if request.method =='POST':
         # FORMULÁRIO SUBMETIDO
         form = EmailFormulario(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
+            post_url = request.build_absolute_url(post.get_absolute_url())
+            subject = f"{cd['nome']} recomenda enquanto voce lê " \
+                      f"{post.titulo}"
+            message = f"Leia {post.titulo} em {post_url}\n\n" \
+                      f"{cd['nome']} comentários: {cd['comentarios']}"
+            send_mail(subject, message, 'lawrenceqf@gmail.com', [cd['para']])
+            sent = True
             # SEND EMAIL
-        else:
-            form = EmailFormulario()
-        return render(request,'blog_app/post/compartilhar.html',{'post':post,'form':form})
+    else:
+        form = EmailFormulario()
+    return render(request,'blog_app/post/compartilhar.html',{'post':post,
+                                                             'form':form,
+                                                             'sent':sent})
