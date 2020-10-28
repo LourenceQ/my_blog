@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Post
+from .models import Post, Comentarios
 from django.views.generic import ListView
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
-from .forms import EmailFormulario
+from .forms import EmailFormulario, ComentarioForm
 from django.core.mail import send_mail
 # Create your views here.
 
@@ -34,7 +34,27 @@ def detalhe_post(request, year, month, day, post):
                                    publicar__year=year,
                                    publicar__month=month,
                                    publicar__day=day)
-    return render(request,'blog_app/post/detalhe.html',{'post': post})
+     # LISTA DE COMENTARIOS ATIVOS PAR O POST
+    comentarios = post.comentarios.filter(ativo="True")
+
+    novo_comentario = None
+
+    if request.method == 'POST':
+        # UM COMENTÁRIO FOI POSTADO
+        comentario_form = ComentarioForm(data=request.POST)
+        if comentario_form.is_valid():
+            # CRIAR OBJETO DE COMENTARIO MAS NÃO SALVA NO BANCO DE DADOS AINDA
+            novo_comentario = comentario_form.save(commit=False)
+            # ATRIBUI O ATUAL POPST AO COMENTARIO
+            novo_comentario.post = post
+            # SALVA O COMENTARIO NO BANCO DE DADOS
+            novo_comentario.save()
+    else:
+        comentario_form = ComentarioForm
+    return render(request,'blog_app/post/detalhe.html',{'post': post,
+                                                        'comentarios':comentarios,
+                                                        'novo_comentario': novo_comentario,
+                                                        'comentario_form': comentario_form})
 
 class PostListView(ListView):
     queryset = Post.publicado.all() #

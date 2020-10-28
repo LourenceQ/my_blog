@@ -1,4 +1,5 @@
 from django import forms
+from .models import Comentarios
 
 # CADA TIPO DE CAMPO TEM UMA FERRAMENTA QUE DETERMINA COMO O CAMPO É RENDERIZADO EM HTML
 class EmailFormulario(forms.Form): # FORMUÁIO CRIADO ERDANDO A CLASSE BASE Form
@@ -7,3 +8,8 @@ class EmailFormulario(forms.Form): # FORMUÁIO CRIADO ERDANDO A CLASSE BASE Form
     para = forms.EmailField() # REQUER UM ENDERESSO DE EMAIL VÁLIDO
     comentarios = forms.CharField(required=False,
                                   widget=forms.Textarea) # required=False FAZ O CAMPO DE COMENTÁRIO OPCIONAL
+
+class ComentarioForm(forms.ModelForm):
+    class Meta:
+        model = Comentarios
+        fields = ('nome', 'email', 'body')

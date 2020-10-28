@@ -44,3 +44,20 @@ class Post(models.Model):
 
     def __str__(self): # METODO PADRÃO PARA LEITURA DO OBJETO
         return self.titulo
+
+class Comentarios(models.Model):
+    post = models.ForeignKey(Post,
+                             on_delete= models.CASCADE,
+                             related_name='comentarios') # ASSOCIA UM COMENTÁRIO A UM POST
+    nome = models.CharField(max_length=80)
+    email = models.EmailField()
+    body = models.TextField()
+    criado = models.DateTimeField(auto_now_add=True)
+    atualizado = models.DateTimeField(auto_now=True)
+    ativo = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ('criado',)
+
+    def __str__(self):
+        return f'Commentário de {self.nome} em {self.post}'
