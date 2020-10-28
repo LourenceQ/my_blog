@@ -52,7 +52,7 @@ def post_compartilhar(request, post_id): # DEFINE A VIEW QUE PEGA AS VARIAVEIS O
         form = EmailFormulario(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            post_url = request.build_absolute_url(post.get_absolute_url())
+            post_url = request.build_absolute_uri(post.get_absolute_url())
             subject = f"{cd['nome']} recomenda enquanto voce lê " \
                       f"{post.titulo}"
             message = f"Leia {post.titulo} em {post_url}\n\n" \
