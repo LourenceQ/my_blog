@@ -35,7 +35,7 @@ def detalhe_post(request, year, month, day, post):
                                    publicar__month=month,
                                    publicar__day=day)
      # LISTA DE COMENTARIOS ATIVOS PAR O POST
-    comentarios = post.comentarios.filter(ativo="True")
+    comentarios = post.comentarios.filter(ativo=True)
 
     novo_comentario = None
 

@@ -19,6 +19,6 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(Comentarios)
 class ComentarAdmin(admin.ModelAdmin):
-    exibir_lista = ('nome', 'email', 'post', 'criado', 'ativo')
-    filtro_lista = ('ativo', 'criado', 'atualizado')
-    campo_pesquisa = ('nome', 'email', 'body')
+    list_display = ('nome', 'email', 'post', 'criado', 'ativo')
+    list_filter = ('ativo', 'criado', 'atualizado')
+    search_fields = ('nome', 'email', 'body')
