@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
+from taggit.managers import TaggableManager
 
 # Create your models here.
 class AdminPub(models.Manager):
@@ -32,6 +33,9 @@ class Post(models.Model):
                                 default='rascunho')
     objetos = models.Manager() # MANAGER PADRÃO
     publicado = AdminPub() # MANAGER PERSONALIZADO
+
+    tags = TaggableManager()
+
 
     class Meta: # ESSA CLASSE CONTÉM METADATA. DJANGO ORDENA OS RESULTADOS
         ordering = ('-publicar',) # PELO CAMPO DE PUBLICAÇÃO EM ORDEM DECRESCENTE

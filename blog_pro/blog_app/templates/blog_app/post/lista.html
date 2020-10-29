@@ -7,6 +7,7 @@
       <a href="{{ post.get_absolute_url }}">
       {{ post.titulo }}
       </a>
+      <p class="tags">Tags: {{ post.tags.all|join:", " }}</p>
     </h2>
     <p class="date">
       Published {{ post.publicar }} by {{ post.autor }}
