@@ -4,10 +4,17 @@ from django.views.generic import ListView
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from .forms import EmailFormulario, ComentarioForm
 from django.core.mail import send_mail
+from taggit.models import Tag
 # Create your views here.
 
-def lista_post(request): # ESSA VIEW PEGA A REQUEST COMO ÚNICO PARÂMETRO. PARÂMETRO REQUERIDO POR TODAS AS VIEWS
+def lista_post(request, tag_slug=None): # ESSA VIEW PEGA A REQUEST COMO ÚNICO PARÂMETRO. PARÂMETRO REQUERIDO POR TODAS AS VIEWS
     object_list = Post.publicado.all()
+    tag = None
+
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        object_list = object_list.filter(tags__in=[tag])
+
     paginator = Paginator(object_list, 3) # 3 POST EM CADA PÁGINA
     page = request.GET.get('page')
     try:
@@ -18,7 +25,9 @@ def lista_post(request): # ESSA VIEW PEGA A REQUEST COMO ÚNICO PARÂMETRO. PAR�
     except EmptyPage:
         # SE PÁGINA ESTÁ FORA DO ALCANCE A ULTIMA PÁGINA É ENTREGUE
         posts = paginator.page(paginator.num_pages)
-    return render(request,'blog_app/post/lista.html',{'page':page,'posts':posts})
+    return render(request,'blog_app/post/lista.html',{'page':page,
+                                                      'posts':posts,
+                                                      'tag':tag})
 
     #posts = Post.publicado.all() # NESSA VIEW, É RETIRADA TODOS OS POSTS COM STATUS DE publicado USANDO O MANAGER publicado que foi criado.
     #return render(request,'blog_app/post/lista.html',{'posts':posts})
