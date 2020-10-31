@@ -5,6 +5,7 @@ from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from .forms import EmailFormulario, ComentarioForm
 from django.core.mail import send_mail
 from taggit.models import Tag
+from django.db.models import Count
 # Create your views here.
 
 def lista_post(request, tag_slug=None): # ESSA VIEW PEGA A REQUEST COMO ÚNICO PARÂMETRO. PARÂMETRO REQUERIDO POR TODAS AS VIEWS
@@ -46,6 +47,7 @@ def detalhe_post(request, year, month, day, post):
      # LISTA DE COMENTARIOS ATIVOS PAR O POST
     comentarios = post.comentarios.filter(ativo=True)
 
+
     novo_comentario = None
 
     if request.method == 'POST':
@@ -60,10 +62,18 @@ def detalhe_post(request, year, month, day, post):
             novo_comentario.save()
     else:
         comentario_form = ComentarioForm
+
+    # LISTA DE POSTS SIMILARES
+    post_tags_ids = post.tags.values_list('id', flat=True)
+    similar_posts = Post.publicado.filter(tags__in=post_tags_ids).exclude(id=post.id)
+    similar_posts = similar_posts.annotate(same_tags=Count('tags')).order_by('-same_tags','-publicar')[:4]
+
     return render(request,'blog_app/post/detalhe.html',{'post': post,
                                                         'comentarios':comentarios,
                                                         'novo_comentario': novo_comentario,
-                                                        'comentario_form': comentario_form})
+                                                        'comentario_form': comentario_form,
+                                                        'similar_posts': similar_posts})
+
 
 class PostListView(ListView):
     queryset = Post.publicado.all() #

@@ -1,5 +1,4 @@
 {% extends "blog_app/base.html" %}
-
 {% block title %}{{ post.titulo }}{% endblock %}
 
 {% block content %}
@@ -7,13 +6,23 @@
 <p class="date">
   Published {{ post.publicar }} by {{ post.autor }}
 </p>
-{{ post.body|linebreaks }}
 
+{{ post.body|linebreaks }}
 <p>
   <a href="{% url "blog_app:post_compartilhar" post.id %}">
     Compartilhar esse post
   </a>
 </p>
+
+<h2>Postagens Semalhantes</h2>
+  {% for post in similar_posts %}
+  <p>
+    <a href="{{ post.get_asbolute_url }}">{{ post.titulo }}</a>
+  </p>
+  {% empty %}
+    Não existem postagens semalhantes ainda.
+  {% endfor %}
+
 
 {% with comments.count as total_comments %}
 <h2>
@@ -33,8 +42,10 @@
   <p>Não existem comentário ainda.</p>
 {% endfor %}
 
+
 {% if novo_comentario %}
   <h2>Seu comentário foi adicionado</h2>
+
 {% else %}
   <h2>Adicionar novo comentário</h2>
   <form method="post">
