@@ -1,19 +1,42 @@
-<!DOCTYPE html>
+
+{% load blog_tags %}
 {% load static %}
+
+<!DOCTYPE html>
+
 <html lang="pt" dir="ltr">
+
   <head>
-    <link href="{% static 'blog_app/css/blog.css' %}" rel="stylesheet" >
+    <link href="{% static 'blog_app/css/blog.css' %}" rel="stylesheet">
     <meta charset="utf-8">
     <title>{% block title %}{% endblock %}</title>
   </head>
-  <body>    
+
+  <body>
+
     <div id="content">
       {% block content %}
       {% endblock %}
     </div>
+
     <div id="sidebar">
-      <h2>My blog</h2>
-      <p>This is my blog.</p>
+      <h2>Meu blog</h2>
+      <p>Esse é meu blog sobre tecnología. Eu escrevi {% total_posts %} posts.</p>
+      <h3>Ultimas postagens</h3>
+      {% mostrar_ultimos_posts 3 %}
+      
+      <h3>Postagens mais comentadas</h3>
+      {% get_postagens_mais_comentadas as postagens_mais_comentadas %}
+      <ul>
+        {% for post in postagens_mais_comentadas %}
+        <li>
+          <a href="{{ post.get_absolute_url }}">{{ post.titulo }}</a>
+        </li>
+        {% endfor %}
+      </ul>
     </div>
+
+
+
   </body>
 </html>
