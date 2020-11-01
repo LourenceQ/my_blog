@@ -14,15 +14,15 @@
   </a>
 </p>
 
+
 <h2>Postagens Semalhantes</h2>
   {% for post in similar_posts %}
   <p>
-    <a href="{{ post.get_asbolute_url }}">{{ post.titulo }}</a>
+    <a href="{{ post.get_absolute_url }}">{{ post.titulo }}</a>
   </p>
   {% empty %}
     Não existem postagens semalhantes ainda.
   {% endfor %}
-
 
 {% with comments.count as total_comments %}
 <h2>
