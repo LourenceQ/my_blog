@@ -1,3 +1,5 @@
+from django.utils.safestring import mark_safe
+import markdown
 from django import template
 from ..models import Post
 from django.db.models import Count
@@ -18,3 +20,7 @@ def get_postagens_mais_comentadas(count=5):
     return Post.publicado.annotate(
                 total_commentarios=Count('comentarios')
                 ).order_by('-total_commentarios')[:count]
+
+@register.filter(name='markdown')
+def markdown_format(text):
+    return mark_safe(markdown.markdown(text))
