@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .feeds import UltimosPostsFeed
 
 app_name = 'blog_app' # DEFINE UMA APLICAÇÃO COM O NOME DA VARIAVEL blog_app
                       # PERMITE ORGANIZAR URL's PORAPLICAÇÃO E USAR O NOME AO SER REFERIR A ELAS
@@ -11,6 +12,7 @@ urlpatterns = [       # DEFINIDO DOIS PADRÕES DIFERENTES USANDO A FUNÇÃO path
     path('<int:year>/<int:month>/<int:day>/<slug:post>/',views.detalhe_post,name='detalhe_post'),
     path('<int:post_id>/compartilhar/',views.post_compartilhar, name='post_compartilhar'),
     path('tag/<slug:tag_slug>/',views.lista_post,name='lista_post_by_tag'),
+    path('feed/',UltimosPostsFeed(),name='post_feed'),
 
 ]
 
